@@ -58,7 +58,7 @@ modules-left = launcher i3
 ;modules-center = mpd
 ; Playerctl (use the playerctk_status script in my repo: https://github.com/ngynLk/scripts)
 modules-center = previous sep spotify sep  playpause sep next
-modules-right = cpu memory time pulseaudio power
+modules-right = wlan eth cpu memory  time pulseaudio power
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -190,7 +190,7 @@ label = %percentage_used%%
 
 [module/wlan]
 type = internal/network
-interface = wlx0013eff2094e
+interface = enp4s0
 interval = 3.0
 
 format-connected =  <label-connected>
@@ -211,7 +211,7 @@ ramp-signal-color1 = ${colors.color1}
 
 [module/eth]
 type = internal/network
-interface = eno1
+interface = enp4s0
 interval = 3.0
 
 format-connected-prefix = " "
