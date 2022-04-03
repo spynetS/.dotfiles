@@ -338,9 +338,9 @@ format-font = 2
 ; Default
 hook-0 = echo "⏸"
 ; Playing
-hook-1 = echo "▶"
+hook-1 = echo "||"
 ; Paused
-hook-2 = echo "||"
+hook-2 = echo "▶"
 click-left = "spotifyctl -q playpause"
 
 
