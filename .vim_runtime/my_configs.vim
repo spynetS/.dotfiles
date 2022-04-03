@@ -8,7 +8,9 @@ Plug 'SirVer/ultisnips'
 Plug 'yanqd0/snippets-for-vim'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'BrandonRoehl/auto-omni'
+Plug 'dylanaraps/wal.vim'
 Plug 'mxw/vim-jsx'
+
 call plug#end()
 
 "emmet shortcuts
@@ -23,7 +25,8 @@ set rnu
 set nu
 nmap <tab> :tabn
 
-colorscheme dracula
+colorscheme wal
+#colorscheme dracula
 "colorscheme peaksea
 "colorscheme ir_black
 "colorscheme pyte
