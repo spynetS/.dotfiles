@@ -95,6 +95,7 @@ label-background = ${colors.background}
 label-padding = 2
 
 [module/i3]
+pin-workspaces = true
 type = internal/i3
 format = <label-state> <label-mode>
 format-foreground = ${colors.color1}
