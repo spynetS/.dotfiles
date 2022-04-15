@@ -1,6 +1,6 @@
 
 #startup commands
-exec wal -i /usr/share/backgrounds/wallpapers-juhraya/Austria_by_Rutger_Heijmerikx.jpg
+exec wal -i /usr/share/backgrounds/wallpapers-juhraya/Sunset-Of-The-Gods_by_Isaac-Sloan.jpg
 exec picom
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
@@ -335,7 +335,7 @@ set_from_resource $color13    color13
 set_from_resource $color14    color14
 set_from_resource $color15    color15
 
-bindsym $mod+d exec dmenu_run -nb '#1e1e1e' -sf '#1e1e1e' -sb '#89b6e2' -nf '#89b6e2' 
+bindsym $mod+d exec rofi -show run -nb '#1e1e1e' -sf '#1e1e1e' -sb '#89b6e2' -nf '#89b6e2' 
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
