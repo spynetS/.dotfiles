@@ -1,9 +1,14 @@
 
+sudo pacman -S rofi
+sudo pacman -S polybar
+
+yay -S picom-jonaburg-git
+
 rm -r ~/.config/kitty
 ln -s ~/.dotfiles/kitty/ ~/.config/
 
 rm -r ~/.config/.i3
-ln -s ~/.dotfiles/.i3 ~/.config/
+ln -s ~/.dotfiles/.i3 ~/
 
 rm ~/.Xresources
 ln -s ~/.dotfiles/.Xresources/ ~/
@@ -22,3 +27,6 @@ ln -s ~/.dotfiles/.config/polybar ~/.config/
 
 rm ~/.config/picom.conf
 ln -s ~/.dotfiles/.config/picom.conf ~/.config/
+
+rm ~/.zshrc
+ln -s ~/.dotfiles/.zshrc ~/
