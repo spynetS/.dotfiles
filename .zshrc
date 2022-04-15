@@ -24,10 +24,9 @@ autoload -U colors && colors
 alias home="cd ~"
 alias ll="ls -al"
 alias i3reload="i3-msg reload"
-alias i3="vim ~/.i3/config"
+alias i3c="vim ~/.i3/config"
 alias poly="vim ~/.config/polybar/forest/"
 alias gitpac="~/gitpac.sh"
-
 archey3
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 

@@ -10,4 +10,4 @@ git clone $giturl
 echo $folder
 cd ~/programs/$folder
 
-makepkg #-sic
+makepkg -sic
