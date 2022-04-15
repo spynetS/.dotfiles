@@ -3,7 +3,7 @@ rm -r ~/.config/kitty
 ln -s ~/.dotfiles/kitty/ ~/.config/
 
 rm -r ~/.config/.i3
-ln -s ~/.dotfiles/.i3/ ~/.config/
+ln -s ~/.dotfiles/.i3 ~/.config/
 
 rm ~/.Xresources
 ln -s ~/.dotfiles/.Xresources/ ~/
