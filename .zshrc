@@ -24,10 +24,11 @@ autoload -U colors && colors
 alias home="cd ~"
 alias ll="ls -al"
 alias i3reload="i3-msg reload"
-alias i3c="vim ~/.i3/config"
+alias i3="vim ~/.i3/config"
 alias poly="vim ~/.config/polybar/forest/"
-alias gitpac="~/gitpac.sh"
-archey3
+alias gitpac="~/.dotfiles/gitpac.sh"
+alias tab="~/.dotfiles/tab.sh &"
+neofetch
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 

@@ -1,4 +1,6 @@
 #!/bin/sh
+
+echo write the git url
 read giturl
 
 USER_HOME=$(eval echo ~${SUDO_USER})
