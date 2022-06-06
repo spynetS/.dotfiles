@@ -1,8 +1,12 @@
 #startup commands
-exec wal -i /usr/share/backgrounds/wallpapers-juhraya/Sunset-Of-The-Gods_by_Isaac-Sloan.jpg
+exec wal -i /usr/share/backgrounds/wallpapers-juhraya/Springtime-Solitaire_by_Isaac-Sloan.jpg
+exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
+exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
 exec picom
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
+exec kdeconnect-app
+
 #exec --no-startup-id compton
 exec_always start-pulseaudio-x11
 exec systemctl --user start spotify-listener
@@ -53,7 +57,7 @@ bindsym $mod+c kill
 
 # launch categorized menu
 bindsym $mod+z exec --no-startup-id morc_menu
-
+bindsym $mod+g exec carc
 ################################################################################################
 ## sound-section - DO NOT EDIT if you wish to automatically upgrade Alsa -> Pulseaudio later! ##
 ################################################################################################
@@ -73,8 +77,9 @@ bindsym $mod+Ctrl+m exec pavucontrol
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
 bindsym $mod+w exec firefox
-#bindsym $mod+F3 exec pcmanfm
-bindsym $mod+F3 exec terminal -e 'ranger'
+bindsym $mod+F3 exec pcmanfm
+bindsym $mod+F4 exec github-desktop
+#bindsym $mod+F3 exec terminal -e 'ranger'
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+F5 exec terminal -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill picom
