@@ -1,4 +1,6 @@
 #!/bin/sh
+. ~/.config/tab.config
+
 place = pwd
-exec kitty $place
+exec "$terminal" $place
 

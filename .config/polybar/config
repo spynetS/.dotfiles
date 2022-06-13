@@ -30,7 +30,7 @@ color3 = ${xrdb:color7}
 
 [bar/bar]
 enable-ipc=true
-height = 32
+height = 35
 width = 100%
 bottom = false
 
@@ -42,23 +42,24 @@ foreground = ${colors.color1}
 line-size = 2
 padding = 1
 
-font-0=Iosevka Nerd Font:size=11;5
-;font-0=SF Pro Display:size=12;5
+;font-0=Iosevka Nerd Font:size=11;5
+font-0=SF Pro Display:size=12;5
 font-1=Font Awesome 5 Free Solid:size=8;3
-font-2=Font Awesome 5 Free Regular:size=8;3
-font-3=Font Awesome 5 Brands:size=8;3
-font-4=font\-logos:size=10;4
+font-2=Font Awesome 6 Free Regular:size=12;3
+font-3=Font Awesome 6 Free Solid:size=12;3
+
+font-4=fa regular:size=8;3
 font-5=Material Icons:size=13;6
 font-6=IPAGothic:size=11:antialias=true;3
 
-modules-left = launcher i3 
+modules-left = i3 
 ; Spotify (scripts at github.com/dietervanhoof/polybar-spotify-controls) /!\OUTDATED/!\ USE PLAYERCTL INSTEAD
-;modules-center = previous playpause next spotify
+modules-center = spotify playerctl
 ; Mpd
 ;modules-center = mpd
 ; Playerctl (use the playerctk_status script in my repo: https://github.com/ngynLk/scripts)
-modules-center = previous sep spotify sep  playpause sep next
-modules-right = wlan eth cpu memory  time pulseaudio power
+;modules-center = previous sep spotify sep  playpause sep next
+modules-right = wlan eth cpu memory time pulseaudio power launcher
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -71,7 +72,12 @@ override-redirect = false
 ; | '_ ` _ \ / _ \ / _` | | | | |/ _ \/ __|
 ; | | | | | | (_) | (_| | |_| | |  __/\__ \
 ; |_| |_| |_|\___/ \__,_|\__,_|_|\___||___/
-                                    
+[module/playerctl]
+type = custom/script
+interval = 2
+exec = echo $(playerctl metadata -f '{{artist}} - {{title}}' 2>/dev/null | sed -E 's/(.{30}).+/\1.../') %{A1:playerctl previous:}%{A} %{A1:playerctl play-pause:}$(playerctl status 2>/dev/null | grep Playing >/dev/null && echo '' || echo '')%{A} %{A1:playerctl next:}%{A}
+exec-if = playerctl metadata -f {{playerName}} 2>/dev/null | grep -Ev 'mopidy' >/dev/null
+                         
 [module/sep]
 type = custom/text
 content = |
@@ -80,8 +86,8 @@ content-foreground = ${colors.color3}
 
 [module/launcher]
 type=custom/text
-content = 
-content-font=5
+content = s
+content-font=0
 content-foreground=${colors.color1}
 content-padding=2
 click-left=launcher
@@ -176,7 +182,7 @@ label-song-ellipsis = true
 [module/cpu]
 type = internal/cpu
 interval = 2
-format-prefix = " "
+format-prefix = 
 format-padding = 2
 format-foreground = ${colors.color3}
 label = %percentage%%
@@ -215,7 +221,7 @@ type = internal/network
 interface = enp4s0
 interval = 3.0
 
-format-connected-prefix = " "
+format-connected-prefix = "📶"
 format-connected-prefix-color1 = ${colors.color1-alt}
 label-connected = %local_ip%
 
@@ -312,55 +318,17 @@ menu-1-0 = 
 menu-1-0-exec = i3-msg exit || openbox --exit
 
 ;Spotify modules
-
-[module/previous]
-type = custom/ipc
-format-font = 2
-; Default
-hook-0 = echo ""
-; When spotify active
-hook-1 = echo "< "
-click-left = "spotifyctl -q previous"
-
-
-[module/next]
-type = custom/ipc
-format-font = 2
-; Default
-hook-0 = echo ""
-; When spotify active
-hook-1 = echo ">"
-click-left = "spotifyctl -q next"
-
-
-[module/playpause]
-type = custom/ipc
-format-font = 2
-; Default
-hook-0 = echo "⏸"
-; Playing
-hook-1 = echo "||"
-; Paused
-hook-2 = echo "▶"
-click-left = "spotifyctl -q playpause"
-
-
 [module/spotify]
-type = custom/ipc
-; Default
-hook-0 = echo what 
-; Playing/paused show song name and artist
-hook-1 = echo ; spotifyctl -q status --format '%artist%: %title%'
-
-[module/playerctl]
 type = custom/script
-format-margin = 4
-format-prefix = " "
-; This uses playerctl and a script you can find on my repo. Put the player you want after the command below (`playerctld' if you want it to be adaptive)
-exec = playerctl_status playerctld
-exec-if = [[ "$(playerctl -l)" != "No players found" ]] && echo "0"
-tail = true
-interval = 0
+interval = 1
+format-prefix = "⏯ "
+format = <label>
+exec = python spotifyViewer.py -f '{play_pause} {song} - {artist} - {album}'
+format-underline = #1db954
+;control players (optional)
+click-left = playerctl --player=spotify play-pause 
+click-right = playerctl --player=spotify next 
+click-middle = playerctl --player=spotify previous 
 
 [settings]
 screenchange-reload = true
