@@ -18,7 +18,7 @@
 [colors]
 
 background = ${xrdb:background}
-color1 = ${xrdb:color4}
+color1 = ${xrdb:color6}
 color2 = ${xrdb:color5}
 color3 = ${xrdb:color7}
 
@@ -323,7 +323,7 @@ type = custom/script
 interval = 1
 format-prefix = "⏯ "
 format = <label>
-exec = python spotifyViewer.py -f '{play_pause} {song} - {artist} - {album}'
+exec = python ~/.config/polybar/spotifyViewer.py -f '{play_pause} {song} - {artist} - {album}'
 format-underline = #1db954
 ;control players (optional)
 click-left = playerctl --player=spotify play-pause 
