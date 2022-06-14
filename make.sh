@@ -6,12 +6,16 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     sudo pacman -S rofi
     sudo pacman -S polybar
-
     sudo pacman -S yay
     sudo pacman -S kitty
     sudo pacman -S ranger
-
     sudo pacman -S otf-font-awesome
+
+    yay -S neofetch
+
+    sudo pacman -S pavucontrol
+
+    yay -S calcer
 
 fi
 
