@@ -4,11 +4,6 @@ read -p "install all programs? [y/n]" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    installprograms
-fi
-
-installprograms(){
-
     sudo pacman -S rofi
     sudo pacman -S polybar
 
@@ -18,21 +13,12 @@ installprograms(){
 
     sudo pacman -S otf-font-awesome
 
-
-}
-
+fi
 
 read -p "move all config files? [y/n]" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
-    move
-fi
-
-
-#yay -S picom-jonaburg-git
-move(){
-
     rm -r ~/.config/kitty
     ln -s ~/.dotfiles/kitty/ ~/.config/
 
@@ -67,7 +53,9 @@ move(){
     mkdir ~/.config/rofi
     ln -s ~/.dotfiles/.config/rofi/config.rasi ~/.config/rofi/
 
-}
+fi
+
+
 read -p "set zsh as default shell? [y/n]" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
@@ -77,6 +65,4 @@ fi
 
 i3-msg reload
 echo the dot files install is done
-
-
 
