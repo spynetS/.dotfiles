@@ -340,7 +340,7 @@ set_from_resource $color13    color13
 set_from_resource $color14    color14
 set_from_resource $color15    color15
 
-bindsym $mod+Shift+c calcer
+bindsym $mod+Shift+c exec calcer
 bindsym $mod+d exec rofi -show run
 bindsym $mod+SHIFT+w exec rofi -show combi
 

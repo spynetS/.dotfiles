@@ -52,7 +52,7 @@ font-4=fa regular:size=8;3
 font-5=Material Icons:size=13;6
 font-6=IPAGothic:size=11:antialias=true;3
 
-modules-left = i3 
+modules-left = sep 
 ; Spotify (scripts at github.com/dietervanhoof/polybar-spotify-controls) /!\OUTDATED/!\ USE PLAYERCTL INSTEAD
 modules-center = spotify playerctl
 ; Mpd

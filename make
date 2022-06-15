@@ -53,10 +53,15 @@ then
     rm ~/.profile
     ln -s ~/.dotfiles/.profile ~/
 
-    rm ~/.config/rofi/config.rasi
+     rm ~/.config/rofi/config.rasi
     mkdir ~/.config/rofi
     ln -s ~/.dotfiles/.config/rofi/config.rasi ~/.config/rofi/
-
+   
+    rm ~/.config/qtile/config.py
+    mkdir ~/.config/qtile
+    ln -s ~/.dotfiles/.config/qtile/config.py ~/.config/qtile/
+   
+    
 fi
 
 
