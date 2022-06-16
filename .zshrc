@@ -27,7 +27,7 @@ alias i3reload="i3-msg reload"
 alias i3="gvim ~/.i3/config"
 alias poly="vim ~/.config/polybar/forest/"
 alias gitpac="~/.dotfiles/gitpac.sh"
-#alias tab="~/.dotfiles/tab.sh &"
+alias dot="cd ~/.dotfiles/"
 alias thor="python ~/dev/Thor/main.py"
 neofetch
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh

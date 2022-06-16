@@ -161,7 +161,22 @@ widget_defaults = dict(
     padding=5,
 )
 extension_defaults = widget_defaults.copy()
-
+catppuccin = {
+    "flamingo": "#F2CDCD",
+    "mauve": "#DDB6F2",
+    "pink": "#F5C2E7",
+    "maroon": "#E8A2AF",
+    "red": "#F28FAD",
+    "peach": "#F8BD96",
+    "yellow": "#FAE3B0",
+    "green": "#ABE9B3",
+    "teal": "#B5E8E0",
+    "blue": "92CDFB",
+    "sky": "#89DCEB",
+    "white": "#D9E0EE",
+    "gray0": "#6E6C7E",
+    "black1": "#1A1826",
+}
 
 def get_widgets(primary=False):
     widgets = [
@@ -210,19 +225,19 @@ def get_widgets(primary=False):
             inactive=catppuccin["black1"],
         ),
         widget.TextBox(
-            text="", padding=0, fontsize=30, foreground=catppuccin["peach"]
+            text="▶", padding=0, fontsize=60, foreground=catppuccin["peach"]
         ),
         widget.WindowName(fontsize=12, foreground=catppuccin["black1"]),
-        widget.TextBox(text="", padding=0, fontsize=30, foreground=catppuccin["teal"]),
+        widget.TextBox(text="◀", padding=0, fontsize=50, foreground=catppuccin["teal"]),
         widget.Volume(
             fmt="墳 {}",
             mute_command="amixer -D pulse set Master toggle",
             background=catppuccin["teal"],
         ),
         widget.TextBox(
-            text="",
+            text="◀",
             padding=0,
-            fontsize=30,
+            fontsize=50,
             foreground=catppuccin["green"],
             background=catppuccin["teal"],
         ),
@@ -232,25 +247,38 @@ def get_widgets(primary=False):
             background=catppuccin["green"],
         ),
         widget.TextBox(
-            text="",
+            text="◀",
             padding=0,
-            fontsize=30,
-            foreground=catppuccin["yellow"],
+            fontsize=50,
+            foreground=catppuccin["pink"],
             background=catppuccin["green"],
+        ),
+
+        widget.Memory(
+            #format=" {load_percent:04}%",
+            mouse_callbacks={"Button1": lazy.spawn("kitty -e htop")},
+            background=catppuccin["pink"],
+        ),
+        widget.TextBox(
+            text="◀",
+            padding=0,
+            fontsize=50,
+            foreground=catppuccin["yellow"],
+            background=catppuccin["pink"],
         ),
         widget.CapsNumLockIndicator(fmt=" {}", background=catppuccin["yellow"]),
         widget.TextBox(
-            text="",
+            text="◀",
             padding=0,
-            fontsize=30,
+            fontsize=50,
             foreground=catppuccin["peach"],
             background=catppuccin["yellow"],
         ),
         widget.Clock(format=" %a %d %b %Y, %I:%M %p", background=catppuccin["peach"]),
         widget.TextBox(
-            text="",
+            text="◀",
             padding=0,
-            fontsize=30,
+            fontsize=50,
             foreground=catppuccin["red"],
             background=catppuccin["peach"],
         ),
@@ -265,9 +293,9 @@ def get_widgets(primary=False):
             background=catppuccin["red"],
         ),
         widget.TextBox(
-            text="",
+            text="◀",
             padding=0,
-            fontsize=30,
+            fontsize=50,
             foreground=catppuccin["pink"],
             background=catppuccin["red"],
         ),
@@ -292,7 +320,7 @@ def get_widgets(primary=False):
         widget.TextBox(
             text="",
             padding=0,
-            fontsize=30,
+            fontsize=50,
             foreground=catppuccin["pink"],
             background="#00000000",
         ),
@@ -310,7 +338,7 @@ screens = [
             get_widgets(primary=True),
             32,
             background="#00000000",
-            margin=[2,0,0,0]
+            margin=[0,10,10,10]
         ),
     ),
 
