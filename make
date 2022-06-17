@@ -8,10 +8,12 @@ then
     sudo pacman -S polybar
     sudo pacman -S yay
     sudo pacman -S kitty
+    sudo pacman -S firefox
     sudo pacman -S ranger
     sudo pacman -S otf-font-awesome
 
     yay -S neofetch
+    yay -S npm
 
     sudo pacman -S pavucontrol
 
