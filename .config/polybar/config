@@ -18,7 +18,7 @@
 [colors]
 
 background = ${xrdb:background}
-color1 = ${xrdb:color6}
+color1 = ${xrdb:color19}
 color2 = ${xrdb:color5}
 color3 = ${xrdb:color7}
 
@@ -52,14 +52,14 @@ font-4=fa regular:size=8;3
 font-5=Material Icons:size=13;6
 font-6=IPAGothic:size=11:antialias=true;3
 
-modules-left = sep 
+modules-left = i3
 ; Spotify (scripts at github.com/dietervanhoof/polybar-spotify-controls) /!\OUTDATED/!\ USE PLAYERCTL INSTEAD
 modules-center = spotify playerctl
 ; Mpd
 ;modules-center = mpd
 ; Playerctl (use the playerctk_status script in my repo: https://github.com/ngynLk/scripts)
 ;modules-center = previous sep spotify sep  playpause sep next
-modules-right = wlan eth cpu memory time pulseaudio power launcher
+modules-right = sep wlan sep eth sep cpu sep memory sep time sep pulseaudio sep power
 
 scroll-up = i3wm-wsnext
 scroll-down = i3wm-wsprev
@@ -112,7 +112,8 @@ enable-click = true
 reverse-scroll = false
 
 label-focused = %index%
-label-focused-overline = ${colors.color1}
+label-focused-underline = ${colors.color1}
+label-focused-background = ${colors.color3}
 label-focused-padding = 2
 
 label-unfocused = %index%
