@@ -60,7 +60,8 @@ then
     rm ~/.config/qtile/config.py
     mkdir ~/.config/qtile
     ln -s ~/.dotfiles/.config/qtile/config.py ~/.config/qtile/
-   
+
+    ln ./colors.txt ~/.config/qtile/colors.txt
     
 fi
 
