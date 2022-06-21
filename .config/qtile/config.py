@@ -29,6 +29,9 @@ from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+import os
+
+lazy.spawn("firefox")
 
 mod = "mod4"
 terminal = guess_terminal()
@@ -149,10 +152,9 @@ layouts = [
     # layout.MonadTall(),
     # layout.MonadWide(),
     # layout.RatioTile(),
-    layout.Tile(),
     # layout.TreeTab(),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
+   # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
@@ -227,7 +229,7 @@ def get_widgets(primary=False):
         widget.TextBox(
             text="▶", padding=0, fontsize=60, foreground=catppuccin["peach"]
         ),
-        widget.WindowName(fontsize=12, foreground=catppuccin["black1"]),
+        widget.WindowName(fontsize=12, foreground=catppuccin["white"]),
         widget.TextBox(text="◀", padding=0, fontsize=50, foreground=catppuccin["teal"]),
         widget.Volume(
             fmt="墳 {}",
