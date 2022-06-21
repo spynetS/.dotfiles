@@ -1,7 +1,7 @@
 #startup commands
 exec wal -i ~/Pictures/backgrounds/two_moon7680x4320_7680x4320.jpg
-exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
-exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
+#exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
+#exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
 exec picom
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
@@ -22,7 +22,7 @@ set $mod Mod4
 # workspace_layout tabbed <stacking|tabbed>
 
 # Configure border style <normal|1pixel|pixel xx|none|pixel>
-default_border pixel 2
+default_border pixel 4
 default_floating_border normal
 
 # Hide borders
@@ -35,7 +35,7 @@ bindsym XF86AudioMute exec pactl -- set-sink-volume 0 -100%
 
 # change borders
 bindsym $mod+u border none
-bindsym $mod+y border pixel 2
+bindsym $mod+y border pixel 4
 bindsym $mod+n border normal
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -349,8 +349,8 @@ bar {
 	i3bar_command i3bar
 	status_command i3status
 	position bottom
-  mode hide
-  modifier none 
+    mode hide
+    modifier none 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
 #	tray_output eDP1
@@ -365,8 +365,8 @@ bar {
         statusline #F9FAF9
         separator  #454947
 
-#                      border  backgr. text
-        focused_workspace  #222D31 #ffffff #292F34
+#                           border  backgr. text
+        focused_workspace  #222D31 #ffffff #ff5050
         active_workspace   #595B5B #353836 #FDF6E3
         inactive_workspace #595B5B #222D31 #EEE8D5
         binding_mode       #16a085 #2C2C2C #F9FAF9
