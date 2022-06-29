@@ -342,7 +342,7 @@ set_from_resource $color15    color15
 
 bindsym $mod+Shift+c exec calcer
 bindsym $mod+d exec rofi -show run
-bindsym $mod+SHIFT+w exec rofi -show combi
+bindsym $mod+SHIFT+w exec rofi -show window
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {

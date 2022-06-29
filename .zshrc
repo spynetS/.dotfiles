@@ -24,7 +24,7 @@ autoload -U colors && colors
 alias home="cd ~"
 alias ll="ls -al"
 alias i3reload="i3-msg reload"
-alias i3="gvim ~/.i3/config"
+alias i3="vim ~/.config/i3/config"
 alias poly="vim ~/.config/polybar/forest/"
 alias gitpac="~/.dotfiles/gitpac.sh"
 alias dot="cd ~/.dotfiles/"
