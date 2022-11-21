@@ -1,7 +1,7 @@
 #startup commands
 exec wal -i ~/Pictures/backgrounds/two_moon7680x4320_7680x4320.jpg
-#exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
-#exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
+exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
+exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
 exec picom
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
@@ -11,7 +11,10 @@ exec kdeconnect-app
 exec_always start-pulseaudio-x11
 exec systemctl --user start spotify-listener
 exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144
+exec dunst
 
+bindsym Ctrl+Shift+k exec setxkbmap se
+bindsym Ctrl+Shift+l exec setxkbmap us
 
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
