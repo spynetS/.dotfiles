@@ -64,6 +64,12 @@ then
     ln -s ~/.dotfiles/.config/qtile/config.py ~/.config/qtile/
 
     ln ./colors.txt ~/.config/qtile/colors.txt
+
+    mkdir ~/.config/awesome
+    rm ~/.config/awesome/rc.lua
+    ln -s ~/.dotfiles/.config/rc.lua ~/.config/awesome/
+
+
     
 fi
 
