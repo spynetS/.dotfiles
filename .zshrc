@@ -29,6 +29,7 @@ alias poly="vim ~/.config/polybar/forest/"
 alias gitpac="~/.dotfiles/gitpac.sh"
 alias dot="cd ~/.dotfiles/"
 alias thor="python ~/dev/Thor/main.py"
+alias newClass="python ~/dev/skola/programering2/newClass.py"
 neofetch
 #source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
