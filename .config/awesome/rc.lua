@@ -203,7 +203,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height=30, opacity=0.9})
+    s.mywibox = awful.wibar({ position = "top", screen = s, height=30, opacity=0.6})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -280,6 +280,11 @@ globalkeys = gears.table.join(
 
     -- My keysbindings :)))))
     --
+    --
+    awful.key({ modkey,"Control"           }, "k",      function() awful.spawn.with_shell("setxkbmap us") end,
+              {description="sets kayboard to us", group="awesome"}),
+    awful.key({ modkey,"Control"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
+              {description="sets kayboard to se", group="awesome"}),
     awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("rofi -show run") end,
               {description = "open rofi", group = "launcher"}),
     awful.key({ modkey,           }, "w", function () awful.spawn(browser) end,
@@ -309,7 +314,7 @@ globalkeys = gears.table.join(
               {description = "decrease the number of columns", group = "layout"}),
     awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+    awful.key({ modkey,    }, "q", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
@@ -352,7 +357,7 @@ clientkeys = gears.table.join(
         {description = "toggle fullscreen", group = "client"}),
     awful.key({ modkey,    }, "c",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
-    awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
+    awful.key({ modkey, "Shift" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
@@ -474,7 +479,7 @@ awful.rules.rules = {
     -- Floating clients.
     { rule_any = {
         instance = {
-          "DTA",  -- Firefox addon DownThemAll.
+          -- "DTA",  -- Firefox addon DownThemAll.
           "copyq",  -- Includes session name in class.
           "pinentry",
         },
@@ -571,7 +576,7 @@ end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-    c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    c:emit_signal("request::activate", "mouse_enter", {raise = true})
 end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
@@ -584,8 +589,9 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- s.mywibox.height = 30
 
 ---- AutoStart --
--- awful.spawn.with_shell("picom")
-awful.spawn.with_shell("nitrogen --restore")
+awful.spawn.with_shell("picom")
 awful.spawn.with_shell("setxkbmap us")
 awful.spawn.with_shell("~/.screenlayout/main.sh")
+awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("wal -R")
+
