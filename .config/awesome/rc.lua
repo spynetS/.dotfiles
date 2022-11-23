@@ -200,31 +200,8 @@ connection = mpc.new(nil, nil, nil, error_handler,
         title, artist, file = result.title, result.artist, result.file
         pcall(update_widget)
     end)
+mpd_widget:buttons(awful.button({}, 1, function() connection:toggle_play() end))
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
--- Separators
-first = wibox.widget.textbox('<span font="Tamsyn 4">    </span>')
-last = wibox.widget.imagebox()
-last:set_image(beautiful.last)
-spr = wibox.widget.imagebox()
-spr:set_image(beautiful.spr)
-spr_small = wibox.widget.imagebox()
-spr_small:set_image(beautiful.spr_small)
-spr_very_small = wibox.widget.imagebox()
-spr_very_small:set_image(beautiful.spr_very_small)
-spr_right = wibox.widget.imagebox()
-spr_right:set_image(beautiful.spr_right)
-spr_bottom_right = wibox.widget.imagebox()
-spr_bottom_right:set_image(beautiful.spr_bottom_right)
-spr_left = wibox.widget.imagebox()
-spr_left:set_image(beautiful.spr_left)
-bar = wibox.widget.imagebox()
-bar:set_image(beautiful.bar)
-bottom_bar = wibox.widget.imagebox()
-bottom_bar:set_image(beautiful.bottom_bar)
---
---
---
--- 
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
