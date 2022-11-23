@@ -168,7 +168,63 @@ local function set_wallpaper(s)
     end
 end
 
+local mpc = require("mpc")
+local textbox = require("wibox.widget.textbox")
+local timer = require("gears.timer")
+local mpd_widget = textbox()
+local state, title, artist, file = "stop", "", "", ""
+local function update_widget()
+    local text = "Current MPD status: "
+    text = text .. tostring(artist or "") .. " - " .. tostring(title or "")
+    if state == "pause" then
+        text = text .. " (paused)"
+    end
+    if state == "stop" then
+        text = text .. " (stopped)"
+    end
+    mpd_widget.text = text
+end
+local connection
+local function error_handler(err)
+    mpd_widget:set_text("Error: " .. tostring(err))
+    -- Try a reconnect soon-ish
+    timer.start_new(10, function()
+        connection:send("ping")
+    end)
+end
+connection = mpc.new(nil, nil, nil, error_handler,
+    "status", function(_, result)
+        state = result.state
+    end,
+    "currentsong", function(_, result)
+        title, artist, file = result.title, result.artist, result.file
+        pcall(update_widget)
+    end)
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
+-- Separators
+first = wibox.widget.textbox('<span font="Tamsyn 4">    </span>')
+last = wibox.widget.imagebox()
+last:set_image(beautiful.last)
+spr = wibox.widget.imagebox()
+spr:set_image(beautiful.spr)
+spr_small = wibox.widget.imagebox()
+spr_small:set_image(beautiful.spr_small)
+spr_very_small = wibox.widget.imagebox()
+spr_very_small:set_image(beautiful.spr_very_small)
+spr_right = wibox.widget.imagebox()
+spr_right:set_image(beautiful.spr_right)
+spr_bottom_right = wibox.widget.imagebox()
+spr_bottom_right:set_image(beautiful.spr_bottom_right)
+spr_left = wibox.widget.imagebox()
+spr_left:set_image(beautiful.spr_left)
+bar = wibox.widget.imagebox()
+bar:set_image(beautiful.bar)
+bottom_bar = wibox.widget.imagebox()
+bottom_bar:set_image(beautiful.bottom_bar)
+--
+--
+--
+-- 
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
@@ -204,26 +260,24 @@ awful.screen.connect_for_each_screen(function(s)
     -- hack to get gap to wibar
     awful.wibox({
         screen = s,
-        height = 5,
+        height = 10,
         bg = "#00000000",
-    })
+    }) 
     -- Create the wibox
-    s.mywibox = awful.wibox({ position = "top", screen = s, height=30, width=1920-10, opacity=0.6})
+    s.mywibox = awful.wibox({ position = "top", screen = s, height=30, width=1920-40, opacity=0.6})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
         layout = wibox.layout.align.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
-            mylauncher,
             s.mytaglist,
             s.mypromptbox,
         },
-        s.mytasklist, -- Middle widget
+        mpd_widget,
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mykeyboardlayout,
-            wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
         },
