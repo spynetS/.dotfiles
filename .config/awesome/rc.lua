@@ -48,7 +48,7 @@ end
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 
-beautiful.useless_gap = 5
+beautiful.useless_gap = 15
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 browser = "firefox"
@@ -201,13 +201,14 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.tasklist.filter.currenttags,
         buttons = tasklist_buttons
     }
+    -- hack to get gap to wibar
     awful.wibox({
         screen = s,
         height = 5,
         bg = "#00000000",
     })
     -- Create the wibox
-    s.mywibox = awful.wibox({ position = "top", screen = s, height=30,width=1920-10 , opacity=0.6})
+    s.mywibox = awful.wibox({ position = "top", screen = s, height=30, width=1920-10, opacity=0.6})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -283,8 +284,13 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- My keysbindings :)))))
-    --
-    --
+
+    awful.key({ modkey }, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap+10 end,
+              {description="sets kayboard to us", group="awesome"}),
+
+    awful.key({ modkey,"Shift"}, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap-10 end,
+              {description="sets kayboard to us", group="awesome"}),
+
     awful.key({ modkey,"Control"           }, "k",      function() awful.spawn.with_shell("setxkbmap us") end,
               {description="sets kayboard to us", group="awesome"}),
     awful.key({ modkey,"Control"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
@@ -353,6 +359,14 @@ globalkeys = gears.table.join(
 )
 
 clientkeys = gears.table.join(
+    
+    awful.key({ modkey,"Shift"}, "Tab",      function (c) c:move_to_screen()               end,
+              {description = "move to screen", group = "client"}),
+
+    awful.key({ modkey, 'Control' }, 't',awful.titlebar.toggle,
+            {description = 'toggle title bar', group = 'client'}),
+
+
     awful.key({ modkey,           }, "f",
         function (c)
             c.fullscreen = not c.fullscreen
@@ -365,8 +379,6 @@ clientkeys = gears.table.join(
               {description = "toggle floating", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
-    awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
-              {description = "move to screen", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "n",
@@ -469,7 +481,7 @@ root.keys(globalkeys)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-      properties = { border_width = beautiful.border_width,
+      properties = { border_width = 2,
                      border_color = beautiful.border_normal,
                      focus = awful.client.focus.filter,
                      raise = true,
@@ -598,4 +610,5 @@ awful.spawn.with_shell("setxkbmap us")
 awful.spawn.with_shell("~/.screenlayout/main.sh")
 awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("wal -R")
+awful.spawn.with_shell("/home/spy/.config/conky/Sirius/start.sh")
 
