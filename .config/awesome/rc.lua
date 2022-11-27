@@ -237,7 +237,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- hack to get gap to wibar
     awful.wibox({
         screen = s,
-        height = 10,
+        height = 5,
         bg = "#00000000",
     }) 
     -- Create the wibox
@@ -636,8 +636,11 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- s.mywibox.height = 30
 
 ---- AutoStart --
-awful.spawn.with_shell("~/.screenlayout/main.sh")
-awful.spawn.with_shell("picom")
-awful.spawn.with_shell("setxkbmap us")
-awful.spawn.with_shell("wal -R")
-awful.spawn.with_shell("nitrogen --restore")
+awful.spawn.with_shell("~/.dotfiles/initsession.sh")
+-- awful.spawn.with_shell("~/.screenlayout/main.sh")
+-- awful.spawn.with_shell("picom")
+-- awful.spawn.with_shell("setxkbmap us")
+-- awful.spawn.with_shell("wal -R")
+-- awful.spawn.with_shell("nitrogen --restore")
+-- awful.spawn.with_shell("mpd")
+-- awful.spawn.with_shell(".config/conky/Sirius/start.sh")
