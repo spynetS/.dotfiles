@@ -322,9 +322,9 @@ globalkeys = gears.table.join(
     awful.key({ modkey,"Shift"}, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap-10 end,
               {description="sets kayboard to us", group="awesome"}),
 
-    awful.key({ modkey,"Control"           }, "k",      function() awful.spawn.with_shell("setxkbmap us") end,
+    awful.key({"Control", "Shift"          }, "k",      function() awful.spawn.with_shell("setxkbmap us") end,
               {description="sets kayboard to us", group="awesome"}),
-    awful.key({ modkey,"Control"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
+    awful.key({"Control", "Shift"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
               {description="sets kayboard to se", group="awesome"}),
     awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("rofi -show run") end,
               {description = "open rofi", group = "launcher"}),
