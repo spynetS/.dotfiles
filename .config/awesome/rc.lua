@@ -326,7 +326,7 @@ globalkeys = gears.table.join(
               {description="sets kayboard to us", group="awesome"}),
     awful.key({"Control", "Shift"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
               {description="sets kayboard to se", group="awesome"}),
-    awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("rofi -show run") end,
+    awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("~/.config/rofi/launchers/style-5/launcher.sh") end,
               {description = "open rofi", group = "launcher"}),
     awful.key({ modkey,           }, "w", function () awful.spawn(browser) end,
               {description = "open broweser", group = "launcher"}),
