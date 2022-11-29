@@ -6,18 +6,27 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     sudo pacman -S rofi
     sudo pacman -S polybar
-    sudo pacman -S yay
     sudo pacman -S kitty
     sudo pacman -S firefox
     sudo pacman -S ranger
     sudo pacman -S otf-font-awesome
-
+    git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+    
+    yay -S picom-animations-git
+    yay -S nitrogen
+    yay -S pipewire
+    yay -S pywal-nitrogen
+    yay -S cava
+    yay -S pipewire-pulse
     yay -S neofetch
     yay -S npm
 
     sudo pacman -S pavucontrol
 
     yay -S calcer
+    rm -rf ~/.vim_runtime
+    git clone git@github.com:spynetS/vimrc.git ~/.vim_runtime
+    ~/.vim_runtime/install_awesome_vimrc.sh
 
 fi
 
@@ -67,20 +76,17 @@ then
 
     mkdir ~/.config/awesome
     rm ~/.config/awesome/rc.lua
-    ln -s ~/.dotfiles/.config/rc.lua ~/.config/awesome/
-
-
-    
+    ln  ~/.dotfiles/.config/rc.lua ~/.config/awesome/
 fi
 
 
-read -p "set zsh as default shell? [y/n]" -n 1 -r
-echo    # (optional) move to a new line
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-    chsh -s $(which zsh)
-fi
-
-i3-msg reload
+#read -p "set zsh as default shell? [y/n]" -n 1 -r
+#echo    # (optional) move to a new line
+#if [[ $REPLY =~ ^[Yy]$ ]]
+#then
+#    chsh -s $(which zsh)
+#fi
+#
+#i3-msg reload
 echo the dot files install is done
 
