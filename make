@@ -15,15 +15,15 @@ then
     yay -S picom-animations-git
     yay -S nitrogen
     yay -S pipewire
-    yay -S pywal-nitrogen
+    yay -S pywal-git
+    yay -S arandr
     yay -S cava
     yay -S pipewire-pulse
     yay -S neofetch
     yay -S npm
-
     sudo pacman -S pavucontrol
-
     yay -S calcer
+
     rm -rf ~/.vim_runtime
     git clone git@github.com:spynetS/vimrc.git ~/.vim_runtime
     ~/.vim_runtime/install_awesome_vimrc.sh
@@ -34,6 +34,8 @@ read -p "move all config files? [y/n]" -n 1 -r
 echo    # (optional) move to a new line
 if [[ $REPLY =~ ^[Yy]$ ]]
 then
+    ln -s ~/.dotfiles/.config/rofi ~/.config/rofi
+
     rm -r ~/.config/kitty
     ln -s ~/.dotfiles/kitty/ ~/.config/
 
@@ -42,12 +44,6 @@ then
 
     rm ~/.Xresources
     ln -s ~/.dotfiles/.Xresources/ ~/
-
-    rm -r ~/.vim_runtime
-    ln -s ~/.dotfiles/.vim_runtime/ ~/
-
-    rm -r ~/.urxvt
-    ln -s ~/.dotfiles/.urxvt/ ~/
 
     rm -r ~/.config/cava
     ln -s ~/.dotfiles/.config/cava ~/.config/
@@ -61,13 +57,11 @@ then
     rm ~/.zshrc
     ln -s ~/.dotfiles/.zshrc ~/
 
+    ln -s ~/.dotfiles/.zsh ~/.config/.zsh
+    
     rm ~/.profile
     ln -s ~/.dotfiles/.profile ~/
 
-     rm ~/.config/rofi/config.rasi
-    mkdir ~/.config/rofi
-    ln -s ~/.dotfiles/.config/rofi/config.rasi ~/.config/rofi/
-   
     rm ~/.config/qtile/config.py
     mkdir ~/.config/qtile
     ln -s ~/.dotfiles/.config/qtile/config.py ~/.config/qtile/
@@ -76,17 +70,17 @@ then
 
     mkdir ~/.config/awesome
     rm ~/.config/awesome/rc.lua
-    ln  ~/.dotfiles/.config/rc.lua ~/.config/awesome/
+    ln  ~/.dotfiles/.config/awesome/rc.lua ~/.config/awesome/rc.lua
 fi
 
 
-#read -p "set zsh as default shell? [y/n]" -n 1 -r
-#echo    # (optional) move to a new line
-#if [[ $REPLY =~ ^[Yy]$ ]]
-#then
-#    chsh -s $(which zsh)
-#fi
-#
+read -p "set zsh as default shell? [y/n]" -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+    chsh -s $(which zsh)
+fi
+
 #i3-msg reload
 echo the dot files install is done
 
