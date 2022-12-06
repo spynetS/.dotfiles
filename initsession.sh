@@ -10,8 +10,8 @@ else
 fi
 
 echo pipewire done
-picom
 wal -R
+picom
 ~/.screenlayout/main.sh
 mpd
 ~/.config/conky/Sirius/start.sh
