@@ -57,7 +57,7 @@ then
     rm ~/.zshrc
     ln -s ~/.dotfiles/.zshrc ~/
 
-    ln -s ~/.dotfiles/.zsh ~/.config/.zsh
+    ln -s ~/.dotfiles/.zsh ~/.zsh
     
     rm ~/.profile
     ln -s ~/.dotfiles/.profile ~/
