@@ -23,6 +23,10 @@ then
     yay -S npm
     sudo pacman -S pavucontrol
     yay -S calcer
+    yay -S light
+    yay -S xfc4-power-manager
+    yay -S mpd
+    yay -S mpc
 
     rm -rf ~/.vim_runtime
     git clone git@github.com:spynetS/vimrc.git ~/.vim_runtime

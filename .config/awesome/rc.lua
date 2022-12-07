@@ -48,7 +48,8 @@ end
 
 beautiful.init(gears.filesystem.get_themes_dir() .. "xresources/theme.lua")
 
-beautiful.useless_gap = 15
+beautiful.useless_gap = 10
+beautiful.font = "DejaVu Sans 16"
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
 browser = "firefox"
@@ -168,9 +169,9 @@ local function set_wallpaper(s)
     end
 end
 
---local mpc = require("mpc")
+local timer = require("gears.timer")
+--local mpc = require("npc")
 --local textbox = require("wibox.widget.textbox")
---local timer = require("gears.timer")
 --local mpd_widget = textbox()
 --local state, title, artist, file = "stop", "", "", ""
 --local function update_widget()
@@ -201,12 +202,43 @@ end
 --        pcall(update_widget)
 --    end)
 --mpd_widget:buttons(awful.button({}, 1, function() connection:toggle_play() end))
+
+local textbox = require("wibox.widget.textbox")
+local memory_widget = textbox()
+memory_widget.valign = 'center'
+
+local command = "free | grep Mem | awk '{print \"Mem use: \"  $3 / $2 * 100 \"%\"  }'"
+timer {
+    timeout = 1,
+    autostart = true,
+    callback = function ()
+    memory_widget.markup = "<span  ><span foreground=\"#00ff00\" >💾</span> "..io.popen(command):read("*all").."</span>"
+    end
+}
+    memory_widget.markup = "<span  ><span foreground=\"#00ff00\" >💾</span> "..io.popen(command):read("*all").."</span>"
+
+local cpuUsageCommand = "grep 'cpu ' /proc/stat | awk '{print \"Cpu usage: \"  ($2+$4)*100/($2+$4+$5) \"%\"}' "
+local cpu_widget = textbox()
+cpu_widget.valign = 'center'
+
+cpu_widget.forced_height = 30
+
+timer {
+    timeout = 1,
+    autostart = true,
+    callback = function ()
+        cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+    end
+}
+cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
+-- screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    -- set_wallpaper(s)
 
     -- Each screen has its own tag table.
     awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
@@ -241,7 +273,7 @@ awful.screen.connect_for_each_screen(function(s)
         bg = "#00000000",
     }) 
     -- Create the wibox
-    s.mywibox = awful.wibox({ position = "top", screen = s, height=30, width=1920-40, opacity=0.6})
+    s.mywibox = awful.wibox({ position = "top", screen = s, height=30, width=1920-40, opacity=0.8})
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -251,9 +283,14 @@ awful.screen.connect_for_each_screen(function(s)
             s.mytaglist,
             s.mypromptbox,
         },
-        mpd_widget,
+        -- memory_widget,
+        {
+            layout = wibox.layout.fixed.horizontal,
+        },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            memory_widget,
+            cpu_widget,
             mykeyboardlayout,
             mytextclock,
             s.mylayoutbox,
@@ -315,6 +352,22 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- My keysbindings :)))))
+    awful.key({ modkey,           }, "l", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/quicklinks.sh") end,
+              {description="rofi links", group="rofi"}),
+    awful.key({ modkey,           }, "n", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/mpd.sh") end,
+              {description="rofi mpd", group="rofi"}),
+    awful.key({ modkey,           }, "v", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/volume.sh") end,
+              {description="rofi volume", group="rofi"}),
+    awful.key({ modkey,           }, "b", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/battery.sh") end,
+              {description="rofi battery", group="rofi"}),
+    awful.key({ modkey,"Shift"           }, "b", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/brightness.sh") end,
+              {description="rofi brightness", group="rofi"}),
+    awful.key({ modkey,           }, "p", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/powermenu.sh") end,
+              {description="rofi powermenu", group="rofi"}),
+    awful.key({ modkey,           }, "a", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/apps.sh") end,
+              {description="rofi apps", group="rofi"}),
+    awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("~/.config/rofi/launchers/type-6/launcher.sh") end,
+              {description = "open rofi", group = "rofi"}),
 
     awful.key({ modkey }, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap+10 end,
               {description="sets kayboard to us", group="awesome"}),
@@ -326,8 +379,6 @@ globalkeys = gears.table.join(
               {description="sets kayboard to us", group="awesome"}),
     awful.key({"Control", "Shift"           }, "l",      function() awful.spawn.with_shell("setxkbmap se") end,
               {description="sets kayboard to se", group="awesome"}),
-    awful.key({ modkey,           }, "d", function () awful.spawn.with_shell("~/.config/rofi/launchers/style-5/launcher.sh") end,
-              {description = "open rofi", group = "launcher"}),
     awful.key({ modkey,           }, "w", function () awful.spawn(browser) end,
               {description = "open broweser", group = "launcher"}),
     awful.key({ modkey,           }, "e", function () awful.spawn(fm) end,
@@ -358,7 +409,7 @@ globalkeys = gears.table.join(
     awful.key({ modkey,    }, "q", function () awful.layout.inc(-1)                end,
               {description = "select previous", group = "layout"}),
 
-    awful.key({ modkey, "Control" }, "n",
+    awful.key({ modkey, "Control" }, ",",
               function ()
                   local c = awful.client.restore()
                   -- Focus restored client
@@ -385,7 +436,7 @@ globalkeys = gears.table.join(
               end,
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
+    awful.key({ modkey,"Shift" }, "p", function() menubar.show() end,
               {description = "show the menubar", group = "launcher"})
 )
 
@@ -412,7 +463,7 @@ clientkeys = gears.table.join(
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "t",      function (c) c.ontop = not c.ontop            end,
               {description = "toggle keep on top", group = "client"}),
-    awful.key({ modkey,           }, "n",
+    awful.key({ modkey,           }, ",",
         function (c)
             -- The client currently has the input focus, so it cannot be
             -- minimized, since minimized clients can't have the focus.
