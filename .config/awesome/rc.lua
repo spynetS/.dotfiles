@@ -233,6 +233,65 @@ timer {
 cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
 
 
+function audioController()
+
+    local stereoid = 62
+    local headphonesid = 59
+    local icon = "🎧"
+    local selectedId = 59
+    local volume = 60
+    local textbox = require("wibox.widget.textbox")
+    local audiodev_widget = textbox()
+    
+    local function toggleAudiodev()
+        if selectedId == headphonesid then
+            icon = "📾"
+            selectedId = stereoid
+            os.execute("/home/spy/.config/awesome/audiodev.sh "..stereoid)
+        else 
+           icon = "🎧"
+            selectedId = headphonesid
+           os.execute("/home/spy/.config/awesome/audiodev.sh "..headphonesid)
+        end 
+        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+    end
+
+    local function changeVol(vol)
+        if(volume+vol >= 0) then volume=volume+vol end
+
+        os.execute("pactl set-sink-volume "..selectedId.." "..volume.."%")
+        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+    end
+
+    local function mute()
+        if(icon == "🔇")then
+            os.execute("pactl set-sink-volume "..selectedId.." "..volume.."%")
+            if(selectedId == stereoid) then icon = "📾" else icon = "🎧" end
+        else
+            icon = "🔇"
+            os.execute("pactl set-sink-volume "..selectedId.." 0%")
+        end
+        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+    end
+    
+    audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+    audiodev_widget.valign = 'center'
+    audiodev_widget:buttons(gears.table.join(
+    awful.button({}, 1, toggleAudiodev),
+    awful.button({}, 3, mute),
+    awful.button({}, 4, function() changeVol(1) end),
+    awful.button({}, 5, function() changeVol(-1) end)
+    ))
+
+
+    return audiodev_widget
+end
+
+
+
+
+
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 -- screen.connect_signal("property::geometry", set_wallpaper)
 
@@ -289,6 +348,7 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            audioController(),
             memory_widget,
             cpu_widget,
             mykeyboardlayout,
@@ -352,8 +412,8 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- My keysbindings :)))))
-    awful.key({ modkey,           }, "l", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/quicklinks.sh") end,
-              {description="rofi links", group="rofi"}),
+    -- awful.key({ modkey,           }, "l", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/quicklinks.sh") end,
+    --           {description="rofi links", group="rofi"}),
     awful.key({ modkey,           }, "n", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/mpd.sh") end,
               {description="rofi mpd", group="rofi"}),
     awful.key({ modkey,           }, "v", function () awful.spawn.with_shell("~/.config/rofi/applets/bin/volume.sh") end,
@@ -371,9 +431,11 @@ globalkeys = gears.table.join(
 
     awful.key({ modkey }, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap+10 end,
               {description="sets kayboard to us", group="awesome"}),
-
     awful.key({ modkey,"Shift"}, "o",function() require("awful").screen.focused().selected_tag.gap = require("awful").screen.focused().selected_tag.gap-10 end,
               {description="sets kayboard to us", group="awesome"}),
+
+    awful.key({ modkey,"Shift"}, "c",function() awful.spawn("kitty --class calcer calcer -s ")  end,
+              {description="spawn calculatro", group="apps"}),
 
     awful.key({"Control", "Shift"          }, "k",      function() awful.spawn.with_shell("setxkbmap us") end,
               {description="sets kayboard to us", group="awesome"}),
@@ -580,6 +642,7 @@ awful.rules.rules = {
           -- "DTA",  -- Firefox addon DownThemAll.
           "copyq",  -- Includes session name in class.
           "pinentry",
+          "calcer",
         },
         class = {
           "Arandr",
@@ -688,6 +751,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 ---- AutoStart --
 awful.spawn.with_shell("~/.dotfiles/initsession.sh")
+awful.spawn.with_shell("export QT_QPA_PLATFORMTHEME=qt5ct")
+
 -- awful.spawn.with_shell("~/.screenlayout/main.sh")
 -- awful.spawn.with_shell("picom")
 -- awful.spawn.with_shell("setxkbmap us")
