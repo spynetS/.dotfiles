@@ -75,6 +75,8 @@ then
     mkdir ~/.config/awesome
     rm ~/.config/awesome/rc.lua
     ln  ~/.dotfiles/.config/awesome/rc.lua ~/.config/awesome/rc.lua
+    ln  ~/.dotfiles/.config/awesome/audiodev.sh ~/.config/awesome/audiodev.sh
+    ln  ~/.dotfiles/.config/awesome/mem.sh ~/.config/awesome/mem.sh
 fi
 
 
