@@ -235,8 +235,8 @@ cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.pop
 
 function audioController()
 
-    local stereoid = 62
-    local headphonesid = 59
+    local stereoid = "alsa_output.pci-0000_0c_00.4.analog-stereo"
+    local headphonesid = "alsa_output.usb-Kingston_Technology_Company_HyperX_Cloud_Flight_Wireless-00.analog-stereo"
     local icon = "🎧"
     local selectedId = 59
     local volume = 60
