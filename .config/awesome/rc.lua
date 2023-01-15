@@ -212,10 +212,10 @@ timer {
     timeout = 1,
     autostart = true,
     callback = function ()
-    memory_widget.markup = "<span  ><span foreground=\"#00ff00\" >💾</span> "..io.popen(command):read("*all").."</span>"
+    memory_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 💾</span> "..io.popen(command):read("*all").."</span>"
     end
 }
-    memory_widget.markup = "<span  ><span foreground=\"#00ff00\" >💾</span> "..io.popen(command):read("*all").."</span>"
+    memory_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 💾</span> "..io.popen(command):read("*all").."</span>"
 
 local cpuUsageCommand = "grep 'cpu ' /proc/stat | awk '{print \"Cpu usage: \"  ($2+$4)*100/($2+$4+$5) \"%\"}' "
 local cpu_widget = textbox()
@@ -227,19 +227,53 @@ timer {
     timeout = 1,
     autostart = true,
     callback = function ()
-        cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+        cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
     end
 }
-cpu_widget.markup = "<span  ><span foreground=\"#00ff00\" >🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
 
+function battery()
+    local icon = " 🔋"
+    local w = require("wibox.widget.textbox")
+    local widget = w()
+    local command = "cat /sys/class/power_supply/BAT0/capacity" 
+    widget.markup = "<span  ><span foreground=\"#76b5c5\" >"..icon.."</span> "..io.popen(command):read("*all").."%</span>"
+    timer {
+        timeout = 1,
+        autostart = true,
+        callback = function ()
+            widget.markup = "<span  ><span foreground=\"#76b5c5\" >"..icon.."</span> "..io.popen(command):read("*all").."%</span>"
+        end
+    }
+    return widget
+
+end
+
+function wifi()
+    
+    local w = require("wibox.widget.textbox")
+    local widget = w()
+
+    local icon = " 📶"
+    local command = "nmcli device status | awk 'NR==2{print $4}'" 
+    widget.markup = "<span  ><span foreground=\"#76b5c5\" >"..icon.."</span> "..io.popen(command):read("*all").."%</span>"
+    timer {
+        timeout = 1,
+        autostart = true,
+        callback = function ()
+            widget.markup = "<span  ><span foreground=\"#76b5c5\" >"..icon.."</span> "..io.popen(command):read("*all").."%</span>"
+        end
+    }
+    return widget
+end
 
 function audioController()
 
-    local stereoid = "alsa_output.pci-0000_0c_00.4.analog-stereo"
+    local stereoid = "alsa_output.pci-0000_04_00.6.analog-stereo"
     local headphonesid = "alsa_output.usb-Kingston_Technology_Company_HyperX_Cloud_Flight_Wireless-00.analog-stereo"
     local icon = "🎧"
     local selectedId = 59
-    local volume = 60
+    local volume = io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all")
     local textbox = require("wibox.widget.textbox")
     local audiodev_widget = textbox()
     
@@ -247,20 +281,22 @@ function audioController()
         if selectedId == headphonesid then
             icon = "📾"
             selectedId = stereoid
+            volume = tonumber(io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all"))
             os.execute("/home/spy/.config/awesome/audiodev.sh "..stereoid)
         else 
            icon = "🎧"
+            volume = tonumber(io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all"))
             selectedId = headphonesid
            os.execute("/home/spy/.config/awesome/audiodev.sh "..headphonesid)
         end 
-        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+        audiodev_widget.markup = "<span><span foreground=\"#76b5c5\" >"..icon.."</span>Volume: "..volume.."%</span>"
     end
 
     local function changeVol(vol)
         if(volume+vol >= 0) then volume=volume+vol end
 
         os.execute("pactl set-sink-volume "..selectedId.." "..volume.."%")
-        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+        audiodev_widget.markup = "<span><span foreground=\"#76b5c5\" >"..icon.."</span>Volume: "..volume.."%</span>"
     end
 
     local function mute()
@@ -271,10 +307,10 @@ function audioController()
             icon = "🔇"
             os.execute("pactl set-sink-volume "..selectedId.." 0%")
         end
-        audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+        audiodev_widget.markup = "<span><span foreground=\"#76b5c5\" >"..icon.."</span>Volume: "..volume.."%</span>"
     end
     
-    audiodev_widget.markup = "<span><span foreground=\"#00ff00\" >"..icon.."</span>Volume: "..volume.."%</span>"
+    audiodev_widget.markup = "<span><span foreground=\"#76b5c5\" >"..icon.."</span>Volume: "..volume.."%</span>"
     audiodev_widget.valign = 'center'
     audiodev_widget:buttons(gears.table.join(
     awful.button({}, 1, toggleAudiodev),
@@ -349,6 +385,8 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             audioController(),
+            battery(),
+            wifi(),
             memory_widget,
             cpu_widget,
             mykeyboardlayout,
