@@ -52,7 +52,7 @@ beautiful.useless_gap = 10
 beautiful.font = "DejaVu Sans 16"
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
-browser = "firefox"
+browser = "qutebrowser"
 fm = 'dolphin'
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
@@ -207,7 +207,7 @@ local textbox = require("wibox.widget.textbox")
 local memory_widget = textbox()
 memory_widget.valign = 'center'
 
-local command = "free | grep Mem | awk '{print \"Mem use: \"  $3 / $2 * 100 \"%\"  }'"
+local command = "free | grep Mem | awk '{print \"Mem use: \"  int($3 / $2 * 100) \"%\"  }'"
 timer {
     timeout = 1,
     autostart = true,
@@ -217,7 +217,9 @@ timer {
 }
     memory_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 💾</span> "..io.popen(command):read("*all").."</span>"
 
-local cpuUsageCommand = "grep 'cpu ' /proc/stat | awk '{print \"Cpu usage: \"  ($2+$4)*100/($2+$4+$5) \"%\"}' "
+-- local cpuUsageCommand = "grep 'cpu ' /proc/stat | awk '{print \"Cpu usage: \"  ($2+$4)*100/($2+$4+$5) \"%\"}' "
+local cpuUsageCommand = "mpstat | grep all | awk '{print (100-$13) \"%\" }'"
+
 local cpu_widget = textbox()
 cpu_widget.valign = 'center'
 
@@ -227,10 +229,10 @@ timer {
     timeout = 1,
     autostart = true,
     callback = function ()
-        cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+        cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."%</span>"
     end
 }
-cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."</span>"
+cpu_widget.markup = "<span  ><span foreground=\"#76b5c5\" > 🧠</span> "..io.popen(cpuUsageCommand):read("*all").."%</span>"
 
 function battery()
     local icon = " 🔋"
@@ -268,12 +270,12 @@ function wifi()
 end
 
 function audioController()
-
-    local stereoid = "alsa_output.pci-0000_04_00.6.analog-stereo"
+    
+    local stereoid = "alsa_output.pci-0000_0c_00.4.analog-stereo"
     local headphonesid = "alsa_output.usb-Kingston_Technology_Company_HyperX_Cloud_Flight_Wireless-00.analog-stereo"
     local icon = "🎧"
-    local selectedId = 59
-    local volume = io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all")
+    local selectedId = headphonesid
+    local volume = 60 --io.popen("pactl list sinks | grep volume | awk 'nr==1{print $5}' | sed 's/%//'"):read("*all")
     local textbox = require("wibox.widget.textbox")
     local audiodev_widget = textbox()
     
@@ -281,11 +283,11 @@ function audioController()
         if selectedId == headphonesid then
             icon = "📾"
             selectedId = stereoid
-            volume = tonumber(io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all"))
+            --volume = tonumber(io.popen("pactl list sinks | grep volume | awk 'nr==1{print $5}' | sed 's/%//'"):read("*all"))
             os.execute("/home/spy/.config/awesome/audiodev.sh "..stereoid)
         else 
-           icon = "🎧"
-            volume = tonumber(io.popen("pactl list sinks | grep Volume | awk 'NR==1{print $5}' | sed 's/%//'"):read("*all"))
+            icon = "🎧"
+            --volume = tonumber(io.popen("pactl list sinks | grep volume | awk 'nr==1{print $5}' | sed 's/%//'"):read("*all"))
             selectedId = headphonesid
            os.execute("/home/spy/.config/awesome/audiodev.sh "..headphonesid)
         end 
@@ -740,44 +742,44 @@ client.connect_signal("manage", function (c)
 end)
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
-client.connect_signal("request::titlebars", function(c)
-    -- buttons for the titlebar
-    local buttons = gears.table.join(
-        awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
-        end),
-        awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
+-- client.connect_signal("request::titlebars", function(c)
+--     -- buttons for the titlebar
+--     local buttons = gears.table.join(
+--         awful.button({ }, 1, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.move(c)
+--         end),
+--         awful.button({ }, 3, function()
+--             c:emit_signal("request::activate", "titlebar", {raise = true})
+--             awful.mouse.client.resize(c)
+--         end)
+--     )
 
-    awful.titlebar(c) : setup {
-        { -- Left
-            awful.titlebar.widget.iconwidget(c),
-            buttons = buttons,
-            layout  = wibox.layout.fixed.horizontal
-        },
-        { -- Middle
-            { -- Title
-                align  = "center",
-                widget = awful.titlebar.widget.titlewidget(c)
-            },
-            buttons = buttons,
-            layout  = wibox.layout.flex.horizontal
-        },
-        { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
-            layout = wibox.layout.fixed.horizontal()
-        },
-        layout = wibox.layout.align.horizontal
-    }
-end)
+--     awful.titlebar(c) : setup {
+--         { -- Left
+--             awful.titlebar.widget.iconwidget(c),
+--             buttons = buttons,
+--             layout  = wibox.layout.fixed.horizontal
+--         },
+--         { -- Middle
+--             { -- Title
+--                 align  = "center",
+--                 widget = awful.titlebar.widget.titlewidget(c)
+--             },
+--             buttons = buttons,
+--             layout  = wibox.layout.flex.horizontal
+--         },
+--         { -- Right
+--             awful.titlebar.widget.floatingbutton (c),
+--             awful.titlebar.widget.maximizedbutton(c),
+--             awful.titlebar.widget.stickybutton   (c),
+--             awful.titlebar.widget.ontopbutton    (c),
+--             awful.titlebar.widget.closebutton    (c),
+--             layout = wibox.layout.fixed.horizontal()
+--         },
+--         layout = wibox.layout.align.horizontal
+--     }
+-- end)
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)

@@ -1,20 +1,12 @@
 #startup commands
-exec wal -i ~/Pictures/backgrounds/two_moon7680x4320_7680x4320.jpg
-exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144.00
-exec xrandr --output DVI-D-0 --primary --right-of DisplayPort-2
-exec picom
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
 exec kdeconnect-app
+exec ~/.dotfiles/initsession.sh
 
-#exec --no-startup-id compton
-exec_always start-pulseaudio-x11
-exec systemctl --user start spotify-listener
-exec xrandr --output DVI-D-0 --mode 1920x1080 --rate 144
-exec dunst
 
-bindsym Ctrl+Shift+k exec setxkbmap se
-bindsym Ctrl+Shift+l exec setxkbmap us
+# bindsym Ctrl+Shift+l exec setxkbmap se
+# bindsym Ctrl+Shift+k exec setxkbmap us
 
 # i3 config file (v4)
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
@@ -70,6 +62,8 @@ exec --no-startup-id volumeicon
 #exec --no-startup-id pulseaudio
 #exec --no-startup-id pa-applet
 bindsym $mod+Ctrl+m exec pavucontrol
+bindsym Ctrl+Shift+l exec setxkbmap se
+bindsym Ctrl+Shift+k exec setxkbmap us
 
 ################################################################################################
 
@@ -79,8 +73,8 @@ bindsym $mod+Ctrl+m exec pavucontrol
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+w exec firefox
-bindsym $mod+F3 exec pcmanfm
+bindsym $mod+w exec qutebrowser
+bindsym $mod+F3 exec dolphin
 bindsym $mod+F4 exec github-desktop
 #bindsym $mod+F3 exec terminal -e 'ranger'
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
@@ -244,10 +238,10 @@ for_window [class="Xfburn"] floating enable
 for_window [urgent=latest] focus
 
 # reload the configuration file
-bindsym $mod+Alt+Shift+c reload
+# bindsym $mod+Alt+Shift+c reload
 
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Alt+Shift+r restart
+# # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# bindsym $mod+Alt+Shift+r restart
 
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
@@ -297,19 +291,14 @@ mode "resize" {
 bindsym $mod+9 exec --no-startup-id blurlock
 
 # Autostart applications
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id nitrogen --restore; sleep 1; picom -b
-exec --no-startup-id manjaro-hello
-exec --no-startup-id nm-applet
-exec --no-startup-id xfce4-power-manager
-exec --no-startup-id pamac-tray
-exec --no-startup-id clipit
+# exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# exec --no-startup-id nm-applet
 # exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
-exec --no-startup-id start_conky_maia
+# exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
 #exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id ff-theme-util
+# exec_always --no-startup-id ff-theme-util
 exec_always --no-startup-id fix_xcursor
 
 # Color palette used for the terminal ( ~/.Xresources file )
@@ -344,7 +333,7 @@ set_from_resource $color14    color14
 set_from_resource $color15    color15
 
 bindsym $mod+Shift+c exec calcer
-bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec /home/spy/.config/rofi/scripts/launcher_t6  #rofi -show run
 bindsym $mod+SHIFT+w exec rofi -show window
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
@@ -382,7 +371,7 @@ bar {
 
 # Theme colors
 # class                   border  backgr. text    indic.   child_border
-#  client.focused          #556064 $color6 $color0 #FDF6E3
+ client.focused          #556064 $color6 $color0 #FDF6E3
 #  client.focused_inactive #2F3D44 $background #89b6e2 #454948
 #  client.unfocused        #2F3D44 $background $color4 #454948
 #  client.urgent           #CB4B16 $background #1ABC9C #268BD2
@@ -390,6 +379,17 @@ bar {
 #
 #  client.background       #ffffff
 
+set_from_resource $fg i3wm.color7 #f0f0f0
+set_from_resource $bg i3wm.color2 #f0f0f0
+
+# class                 border  backgr. text indicator child_border
+# client.focused          $color10     $bg     $fg  $bg       $bg
+client.focused_inactive $bg     $bg     $fg  $bg       $bg
+client.unfocused        $bg     $bg     $fg  $bg       $bg
+client.urgent           $bg     $bg     $fg  $bg       $bg
+client.placeholder      $bg     $bg     $fg  $bg       $bg
+
+client.background       $bg
 #############################
 ### settings for i3-gaps: ###
 #############################

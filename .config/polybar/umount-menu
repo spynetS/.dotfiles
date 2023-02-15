@@ -1,3 +1,0 @@
-#!/bin/bash
-udiskie-umount $(udiskie-info -a | prompt "Choose...")
-
