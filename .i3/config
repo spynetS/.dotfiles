@@ -2,7 +2,6 @@
 exec sudo mpd
 exec ~/.config/polybar/launch.sh
 exec kdeconnect-app
-exec ~/.dotfiles/initsession.sh
 
 
 # bindsym Ctrl+Shift+l exec setxkbmap se
@@ -456,3 +455,4 @@ bindsym $mod+shift+i gaps inner current minus 5
 #        bindsym Return mode "default"
 #        bindsym Escape mode "default"
 #}
+exec ~/.dotfiles/initsession.sh
