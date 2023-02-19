@@ -24,6 +24,7 @@ HISTFILE=~/.cashe/zsh/history
 TERM="kitty"
 
 alias tab="$TERM . &"
+alias code="vscodium"
 alias fetch="archey4"
 alias home="cd ~" 
 alias ll="ls -al"
