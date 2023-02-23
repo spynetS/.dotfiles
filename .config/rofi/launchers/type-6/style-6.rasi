@@ -60,7 +60,7 @@ mainbox {
 imagebox {
     padding:                     20px;
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/images/f.png", height);
+    background-image:            url(`cat ~/.config/nitrogen/bg-saved.cfg | grep xin_0 -1 | grep file | awk '{split($0,a,"="); print a[2]}'`, height);
     orientation:                 vertical;
     children:                    [ "inputbar", "dummy", "mode-switcher" ];
 }
