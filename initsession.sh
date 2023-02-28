@@ -18,3 +18,4 @@ mpd
 setxkbmap us
 nitrogen --restore
 
+./.config/polybar/launch.sh
