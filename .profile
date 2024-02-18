@@ -6,4 +6,5 @@ export jgazm="/usr/bin/jgazm"
 export BROWSER=/usr/bin/qutebrowser
 setxkbmap us
 
-#~/.screenlayouts/main.sh
+wal -R -a 75
+

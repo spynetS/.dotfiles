@@ -12,10 +12,9 @@ fi
 echo pipewire done
 wal -R
 picom
-~/.screenlayout/main.sh
+# ~/.screenlayout/main.sh
 mpd
-~/.config/conky/Sirius/start.sh
+# ~/.config/conky/Sirius/start.sh
 setxkbmap us
 nitrogen --restore
 
-./.config/polybar/launch.sh

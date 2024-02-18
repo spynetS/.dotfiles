@@ -334,7 +334,8 @@ set_from_resource $color14    color14
 set_from_resource $color15    color15
 
 bindsym $mod+Shift+c exec calcer
-bindsym $mod+d exec /home/spy/.config/rofi/scripts/launcher_t6  #rofi -show run
+bindsym $mod+d exec rofi -show run
+#/home/spy/.config/rofi/scripts/launcher_t6  #rofi -show run
 bindsym $mod+SHIFT+w exec rofi -show window
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
@@ -397,8 +398,8 @@ client.background       $bg
 #############################
 
 # Set inner/outer gaps
-gaps inner 14
-gaps outer -2
+gaps inner 0
+gaps outer 0
 # Additionally, you can issue commands with the following syntax. This is useful to bind keys to changing the gap size.
 # gaps inner|outer current|all set|plus|minus <px>
 # gaps inner all set 10
